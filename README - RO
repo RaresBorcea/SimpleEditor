@@ -1,13 +1,18 @@
 Rolul acestui material este de a oferi informații asupra implementării unui editor de text în limbajul C.
 
-(!) Pentru a înțelege în detaliu modul de funcționare al programului, recomandăm coroborarea informației din Readme cu aceea din comentariile alăturate codului.
+(!) Pentru a înțelege în detaliu modul de funcționare al programului, recomandăm coroborarea informației din 
+Readme cu aceea din comentariile alăturate codului.
 
 Ideea generală
-Am creat o structură (List) ce reprezintă textul general, fiecare rând introdus fiind, de fapt, un nod al acestei structuri (listă la liste).
+Am creat o structură (List) ce reprezintă textul general, fiecare rând introdus fiind, de fapt, un nod al 
+acestei structuri (listă la liste).
 Fiecare rând este reprezentat prin primul său caracter (Line).
-Fiecare funcție a editorului este introdusă printr-un subprogram, iar succesiunea comenzilor introduse de utilizator este reținută în două stive (Stack): commands (comm) și undo (undostack).
-Astfel, în momentul introducerii de text, efectuării unei comenzi, aceasta va apărea ca ultim nod (Node) în stiva commands.
-La undo, nodul va fi mutat pe stiva undo, în eventualitatea efectuării operației redo, când va fi readus pe stiva commands și operația va fi reefectuată.
+Fiecare funcție a editorului este introdusă printr-un subprogram, iar succesiunea comenzilor introduse de 
+utilizator este reținută în două stive (Stack): commands (comm) și undo (undostack).
+Astfel, în momentul introducerii de text, efectuării unei comenzi, aceasta va apărea ca ultim nod (Node) în 
+stiva commands.
+La undo, nodul va fi mutat pe stiva undo, în eventualitatea efectuării operației redo, când va fi readus pe 
+stiva commands și operația va fi reefectuată.
 
 Subprogramele introduse:
 Pe lângă funcția main, am introdus trei categorii de subprograme:
@@ -15,17 +20,26 @@ I. Funcții generale, pentru manipularea structurilor de date;
 II. Funcții necesare manipulării textului;
 III. Funcțiile propriu-zise ale editorului.
 Prima categorie cuprinde funcții ce inițializează stive, noduri, șterg structuri etc.
-A doua categorie este importantă în prelucrarea textului, cuprinzând funcții ce transformă șirul de caractere în linii (lineMaker), liniile în textul List general (textMaker) și o funcție ce inserează text la o poziție dată (insert).
+A doua categorie este importantă în prelucrarea textului, cuprinzând funcții ce transformă șirul de caractere
+în linii (lineMaker), liniile în textul List general (textMaker) și o funcție ce inserează text la o poziție dată (insert).
 A treia categrie implementează funcționalitatea propriu-zisă a editorului, conform cerinței, și cuprinde:
-1) Funcția save (salvare), folosită și la salvarea automată din 5 în 5 comenzi. Aici se va efectua și lucrul cu fișierul text, deschiderea/închiderea sa.
-2) Funcția backspace (back), care, asemenea majorității funcțiilor din categoria a III-a, analizează pe cazuri poziția caracterului șters, recreînd legăturile dintre caractere și rânduri după ștergere.
-3) Funcția Go to line (gl), ce are și rolul de extragere a parametrului numeric și transpunerea acestuia din șir de caractere în tip int, pentru a fi utilizat.
+1) Funcția save (salvare), folosită și la salvarea automată din 5 în 5 comenzi. Aici se va efectua și lucrul
+cu fișierul text, deschiderea/închiderea sa.
+2) Funcția backspace (back), care, asemenea majorității funcțiilor din categoria a III-a, analizează pe cazuri
+poziția caracterului șters, recreînd legăturile dintre caractere și rânduri după ștergere.
+3) Funcția Go to line (gl), ce are și rolul de extragere a parametrului numeric și transpunerea acestuia din 
+șir de caractere în tip int, pentru a fi utilizat.
 4) Funcția Go to char (gc), asemănătoare gl, dar aplicată unui anumit caracter de pe un anumit rând.
-5) Funcția Delete line (dl), ce combină funcționalități precum: extragerea parametrului numeric, ștergerea liniei, refacerea legăturilor dintre rânduri etc.
+5) Funcția Delete line (dl), ce combină funcționalități precum: extragerea parametrului numeric, ștergerea liniei,
+refacerea legăturilor dintre rânduri etc.
 6) Funcția Delete (d), asemănătoare dl, dar aplicată unui anumit număr de caractere, începând cu poziția curentă.
 7) Funcția Quit (q), ce permite ieșirea din program (am folosit biblioteca 'sys/select.h' în acest sens).
-8) Funcția Replace, care extrage din comandă cele două cuvinte, efectuează căutarea secvențială a primului cuvând și înlocuirea acestuia cu cel de-al doilea.
-9) Funcția Undo, care, așa cum arată și numele, efectuează „invers” operațiile, aducând textul la starea inițială. Acest lucru este vizibil în special în cazul replace, al cărui undo constă în înlocuirea cuvântului nou cu cel vechi.
-10) Funcția redo, ce reefectuează operațiile. În cazul introducerii de text, utilizarea textMaker a fost înlocuită însă de utilizarea insert, fiind mai eficientă datorită introducerii într-o anumită poziție.
+8) Funcția Replace, care extrage din comandă cele două cuvinte, efectuează căutarea secvențială a primului cuvând
+și înlocuirea acestuia cu cel de-al doilea.
+9) Funcția Undo, care, așa cum arată și numele, efectuează „invers” operațiile, aducând textul la starea inițială. 
+Acest lucru este vizibil în special în cazul replace, al cărui undo constă în înlocuirea cuvântului nou cu cel vechi.
+10) Funcția redo, ce reefectuează operațiile. În cazul introducerii de text, utilizarea textMaker a fost înlocuită 
+însă de utilizarea insert, fiind mai eficientă datorită introducerii într-o anumită poziție.
 
-Pentru introducerea de către utilizator a textului nu s-a creat o funcție specială, apelul funcțiilor de prelucrare a textului realizându-se din main.
+Pentru introducerea de către utilizator a textului nu s-a creat o funcție specială, apelul funcțiilor de prelucrare
+a textului realizându-se din main.
