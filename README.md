@@ -1,2 +1,2 @@
 # SimpleEditor
-Simple command line-based text editor, which uses linked lists, stacks, queues. Beside basic commands, options to undo, redo are also available, together with an autosave feature.
+Based on C-written linked-lists, stacks and queues, app includes options to undo and redo actions, go to line/char, replace, delete line options, as well as an autosave feature.
